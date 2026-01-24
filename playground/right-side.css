@@ -1,0 +1,7 @@
+#right-side {
+    display: inline-grid;
+}
+
+#right-side > * {
+    grid-area: 1/1;
+}

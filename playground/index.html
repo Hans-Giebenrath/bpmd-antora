@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>BPMD Playground</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" type="text/css" href="fonts.css">
+    <link rel="stylesheet" type="text/css" href="visibility-table.css">
+    <link rel="stylesheet" type="text/css" href="editor.css">
+    <link rel="stylesheet" type="text/css" href="svg.css">
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css">
+    <link rel="stylesheet" type="text/css" href="right-side.css">
+    <link rel="stylesheet" type="text/css" href="cheat-sheet.css">
+  </head>
+  <body style="margin-top: 0; margin-bottom: 0; height: 100vh;">
+      <div style="display: flex; gap: 0em;">
+          <div>
+              <!-- flex, so the `select` are 100% high. Better clickability. Better ugliness. -->
+              <div id="top-row" style="display: flex; gap: 0.8em;">
+                  <h1 id="title" style="margin: 0.2em; font-size: 1.2em; display: inline-block;">BPMD Playground</h1>
+                  <select id="example-selection" disabled style="width: 12em;">
+                      <option value="">~ Examples ~</option>
+                      <option value="simple" title="Very simple process, showing the three base statements.">Simple</option>
+                      <option value="pool">Pools</option>
+                      <option value="gateway-branching">Gateway Branching</option>
+                      <option value="gateway-joining">Gateway Joining</option>
+                      <option value="back-edge">Back Edge with Gateways</option>
+                      <option value="lane-crossing">Crossing Lanes</option>
+                      <option value="place" title="How to tweak the layout">Manual layout tweaks: [place ...]</option>
+                      <option value="pe-bpmd-tee-tasks">PE-BPMD: TEE modeled with tasks</option>
+                      <option value="pe-bpmd-tee-lane">PE-BPMD: TEE modeled with a lane</option>
+                      <option value="pe-bpmd-tee-pool">PE-BPMD: TEE modeled with a pool</option>
+                  </select>
+
+                  <select id="download-selection" disabled style="width: 12em;">
+                      <option value="">~ Download ~</option>
+                      <option value="svg-embed" title="For maximum compatibility. Text is embedded as paths, thus any font problems are avoided. However, file size is larger.">SVG with embedded font</option>
+                      <option value="svg-no-embed" title="Smaller text file, but might not render the same everywhere.">SVG with regular text</option>
+                      <option value="bpmn-camunda" title=".bpmn file which can be opened in regular BPMN editors.">BPMN file</option>
+                      <option value="vistab-csv">Visibility Table <code>.csv</code></option>
+                      <option value="diag-txt" title="The source code of your diagram as .txt file. (you could just Ctrl+C it)">Diagram .txt</option>
+                      <option value="link" title="You can share your diagram by pasting this link to other people. However, this does not enable collaborative editing.">Clipboard: Playground Link with Diagram</option>
+                  </select>
+                  <label style="align-self: center" title="The visibility table shows who of the pools (and network) can see what data. Most useful in combination with the `[pe-bpmd ...]` extension.">
+                      <input type="checkbox" id="show-vis-tab">Visibility Table
+                  </label>
+              </div>
+              <div id="editor-container">
+                  <!--
+                      Underlines, or maybe even background colors, are rendered in this pre.
+                      Reason is that `#mirror-editor` is supposed to be updated quickly, but layouting
+                      can take some time. So to not block highlighting newest syntax with waiting for
+                      a successful layout run, `#mirror-editor` is updated by another process, and
+                      `#diagnostics-pane` is updated when the layouting run is done.
+
+                  -->
+                  <pre id="diagnostics-pane" style="white-space: pre"></pre>
+                  <!-- This one stores the actually visible characters, decorated with CSS classes for syntax highlighting. -->
+                  <pre id="mirror-editor" style="white-space: pre"></pre>
+                  <!-- The input field for the user, although it is set to 0 opacity, making it invisible. Text in a textarea cannot be styled (syntax highlighting, lints etc) -->
+                  <textarea id="editor" rows="35" cols="65"></textarea>
+              </div>
+          </div>
+          <div id="right-side">
+              <div style="display: flex; flex-direction: column; gap: 1em; margin-left: 1em;">
+                  <div id="diagram" style="width: 67em;"></div>
+                      <div id="diag-box-container"></div>
+                      <div id="vistab" title="The visibility table shows who can see what data. &quot;V&quot;: Visible in plain text. &quot;H&quot;: Hidden due to some kind of encryption. &quot;P&quot;: Protected, but an attacker with sufficient access, time and resources has a reasonable chance of circumventing the protection. In other words: a lot better than &quot;V&quot; but weaker than &quot;H&quot;."></div>
+              </div>
+          </div>
+      </div>
+      <div id="cheat-sheet-small" style="margin-top:auto;">
+          <div>
+              <div class="full-statement">
+                  <a href="?example=pool">
+                      <code class="stmt-short stmt">=</code>
+                      <code class="display_text">Pool Name</code>
+                  </a>
+                  <a href="?example=pool-identifier">
+                      <code class="id-label header">@identifier</code>
+                  </a>
+                  <a href="?example=pool-blackbox">
+                      <code class="type header">~blackbox</code>
+                  </a>
+                  <a href="?example=pool-multiple">
+                      <code class="type header">~multiple</code>
+                  </a>
+              </div>
+              <div class="short-statements">
+                  <a href="?example=lane"><code>== Lane</code></a>
+              </div>
+          </div>
+
+          <div>
+              <div class="full-statement">
+                  <a href="?example=activity">
+                      <code class="stmt-short stmt">#</code>
+                      <code class="display_text">(Start) Event</code>
+                  </a>
+                  <a href="?example=activity-id"><code class="id-label header">@identifier</code></a>
+                  <a href="?example=activity-incoming-arrow"><code class="arrow header">&lt;-label Edge Text</code></a>
+                  <a href="?example=activity-incoming-arrow"><code class="arrow header">-&gt;label Edge Text</code></a>
+                  <a href="?example=activity-type"><code class="type header">~catch</code></a>
+              </div>
+              <div class="short-statements">
+                  <a href="?example=full-syntax-simple"><code>.#</code></a>
+                  <a href="?example=event-m"><code>M#</code></a>
+                  <a href="?example=event-t"><code>T#</code></a>
+                  <a href="?example=event-c"><code>C#</code></a>
+                  <!-- <code>&gt;#</code> the semantics of this element are not really supported -->
+                  <a href="?example=event-s"><code>S#</code></a>
+                  <a href="?example=event-e"><code>E#</code></a>
+                  <a href="?example=event-escalation"><code>^#</code></a>
+                  <a href="?example=event-compensation"><code>&lt;#</code></a>
+                  <a href="?example=event-multiple"><code>##</code></a>
+                  <a href="?example=event-multiple-parallel"><code>+#</code></a>
+                  <a href="?example=activity-type"><code>~throw</code></a>
+                  <a href="?example=activity-type"><code>~catch</code></a>
+              </div>
+          </div>
+
+          <div>
+              <div class="full-statement">
+                  <a href="?example=activity">
+                      <code class="stmt-short stmt">-</code>
+                      <code class="display_text">Activity</code>
+                  </a>
+                  <a href="?example=activity-id"><code class="id-label header">@identifier</code></a>
+                  <a href="?example=activity-incoming-arrow"><code class="arrow header">&lt;-label Edge Text</code></a>
+                  <a href="?example=activity-incoming-arrow"><code class="arrow header">-&gt;label Edge Text</code></a>
+                  <a href="?example=activity-type"><code class="type header">~service</code></a>
+              </div>
+              <div class="short-statements">
+                  <a href="?example=full-syntax-simple"><code>.- Activity</code></a>
+                  <a href="?example=activity-type"><code>~send</code></a>
+                  <a href="?example=activity-type"><code>~receive</code></a>
+                  <a href="?example=activity-type"><code>~manual</code></a>
+                  <a href="?example=activity-type"><code>~user</code></a>
+                  <a href="?example=activity-type"><code>~script</code></a>
+                  <a href="?example=activity-type"><code>~service</code></a>
+                  <a href="?example=activity-type"><code>~businessrule</code></a>
+                  <a href="?example=activity-type"><code>~multiple</code></a>
+                  <a href="?example=activity-type"><code>~loop</code></a>
+                  <a href="?example=activity-type"><code>~adhoc</code></a>
+                  <a href="?example=activity-type"><code>~compensation</code></a>
+              </div>
+          </div>
+
+          <div>
+              <div class="full-statement">
+                  <a href="?example=activity">
+                      <code class="stmt-short stmt">.</code>
+                      <code class="display_text">End Event</code>
+                  </a>
+                  <a href="?example=activity-id"><code class="id-label header">@identifier</code></a>
+                  <a href="?example=activity-incoming-arrow"><code class="arrow header">&lt;-label Edge Text</code></a>
+                  <a href="?example=activity-type"><code class="type header">~throw</code></a>
+              </div>
+              <div class="short-statements">
+                  <a href="?example=end"><code>! End</code></a>
+                  <a href="?example=full-syntax-simple"><code>..</code></a>
+                  <a href="?example=full-syntax-simple"><code>!.</code></a>
+                  <a href="?example=event-m"><code>M.</code></a>
+                  <a href="?example=event-s"><code>S.</code></a>
+                  <a href="?example=event-e"><code>E.</code></a>
+                  <a href="?example=event-escalation"><code>^.</code></a>
+                  <a href="?example=event-compensation"><code>&lt;.</code></a>
+                  <a href="?example=event-x"><code>X.</code></a>
+                  <a href="?example=event-multiple"><code>#.</code></a>
+              </div>
+              <div class="short-statements">
+              </div>
+          </div>
+
+          <div>
+              <a href="?example=gateway-full"><div class="full-statement">
+                  <code class="stmt-short stmt">X</code>
+                  <code class="display_text">Gateway</code>
+                  <code class="id-label header">@identifier</code>
+                  <span class="alternating">
+                      <span>
+                          <code class="arrow header">&lt;-label1 Edge Text</code>
+                      </span>
+                      <span>
+                          <code class="arrow header">-&gt;label1 Edge Text</code>
+                      </span>
+                  </span>
+              </div></a>
+              <div class="short-statements">
+                  <a href="?example=gateway-shorthand"><code>+ Gateway</code></a>
+                  <a href="?example=gateway-shorthand"><code>O Gateway</code></a>
+                  <a href="?example=gateway-shorthand"><code>* Gateway</code></a>
+                  <a href="?example=gateway-shorthand"><code>XG</code></a>
+                  <a href="?example=gateway-shorthand"><code>+G</code></a>
+                  <a href="?example=gateway-shorthand"><code>OG</code></a>
+                  <a href="?example=gateway-shorthand"><code>*G</code></a>
+              </div>
+          </div>
+
+          <div>
+              <a href="?example=be-int-m">
+                  <div class="full-statement">
+                      <code class="stmt-short stmt">M!</code>
+                      <code class="arrow header">-&gt;label1 Boundary Event Edge Text</code>
+                  </div>
+              </a>
+              <div class="short-statements">
+                  <a href="?example=be-int-t"><code>T!</code></a>
+                  <a href="?example=be-int-c"><code>C!</code></a>
+                  <a href="?example=be-int-s"><code>S!</code></a>
+                  <a href="?example=be-int-e"><code>E!</code></a>
+                  <a href="?example=be-int-escalation"><code>^!</code></a>
+                  <a href="?example=be-int-compensation"><code>&lt;!</code></a>
+                  <a href="?example=be-int-x"><code>X!</code></a>
+                  <a href="?example=be-int-multiple"><code>#!</code></a>
+                  <a href="?example=be-int-multiple-parallel"><code>+!</code></a>
+                  <a href="?example=be-nonint-m"><code>M+</code></a>
+                  <a href="?example=be-nonint-t"><code>T+</code></a>
+                  <a href="?example=be-nonint-c"><code>C+</code></a>
+                  <a href="?example=be-nonint-s"><code>S+</code></a>
+                  <a href="?example=be-nonint-escalation"><code>^+</code></a>
+                  <a href="?example=be-nonint-multiple"><code>#+</code></a>
+                  <a href="?example=be-nonint-multiple-parallel"><code>++</code></a>
+              </div>
+          </div>
+
+          <div>
+              <a href="?example=data-full-statement"><div class="full-statement">
+                  <code class="stmt-short stmt">OD</code>
+                  <code class="display_text">Data Object</code>
+                  <code class="id-label header">@identifier</code>
+                  <code class="arrow header">&lt;-node-matcher Data Flow Text</code>
+                  <code class="arrow header">-&gt;node-matcher Data Flow Text</code>
+              </div></a>
+              <div class="short-statements">
+                  <a href="?example=data-sd"><code>SD Data Store</code></a>
+                  <a href="?example=data-continuation"><code>&nbsp;&amp; Data Continuation</code></a>
+                  <a href="?example=data-continuation"><code>O&amp; Data Continuation</code></a>
+                  <a href="?example=data-continuation"><code>S&amp; Data Continuation</code></a>
+              </div>
+          </div>
+
+          <div>
+              <a href="?example=mf"><div class="full-statement">
+                  <code class="stmt-short stmt">MF</code>
+                  <code class="arrow header">&lt;-start-node-matcher</code>
+                  <code class="arrow header">-&gt;end-node-matcher</code>
+                  <code class="display_text">Message Flow Text</code>
+              </div></a>
+          </div>
+      </div>
+  </body>
+  <script type="module" src="./main.js" ></script>
+</html>
