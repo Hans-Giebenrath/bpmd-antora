@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>BPMD Playground</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" type="text/css" href="fonts.css">
+    <link rel="stylesheet" type="text/css" href="visibility-table.css">
+    <link rel="stylesheet" type="text/css" href="editor.css">
+    <link rel="stylesheet" type="text/css" href="svg.css">
+    <link rel="stylesheet" type="text/css" href="syntax-highlighting.css">
+    <link rel="stylesheet" type="text/css" href="right-side.css">
+    <link rel="stylesheet" type="text/css" href="cheat-sheet.css">
+  </head>
+  <body style="margin-top: 0; margin-bottom: 0; height: 100vh;">
+      <div style="display: flex; gap: 0em;">
+          <div>
+              <div id="top-row">
+                  <h1 id="title" style="margin: 0.2em; font-size: 1.2em; display: inline-block;">BPMD Playground</h1>
+                  <select id="download-selection" disabled>
+                      <option value="">--Download--</option>
+                      <option value="svg-embed" title="For maximum compatibility. Text is embedded as paths, thus any font problems are avoided. However, file size is larger.">SVG with embedded font</option>
+                      <option value="svg-no-embed" title="Smaller text file, but might not render the same everywhere.">SVG with regular text</option>
+                      <option value="bpmn-camunda" title=".bpmn file which can be opened in regular BPMN editors.">BPMN file</option>
+                      <option value="vistab-csv">Visibility Table <code>.csv</code></option>
+                      <option value="diag-txt" title="The source code of your diagram as .txt file. (you could just Ctrl+C it)">Diagram .txt</option>
+                  </select>
+              </div>
+              <div id="editor-container">
+                  <!--
+                      Underlines, or maybe even background colors, are rendered in this pre.
+                      Reason is that `#mirror-editor` is supposed to be updated quickly, but layouting
+                      can take some time. So to not block highlighting newest syntax with waiting for
+                      a successful layout run, `#mirror-editor` is updated by another process, and
+                      `#diagnostics-pane` is updated when the layouting run is done.
+
+                  -->
+                  <pre id="diagnostics-pane" style="white-space: pre"></pre>
+                  <!--  -->
+                  <pre id="mirror-editor" style="white-space: pre"></pre>
+                  <textarea id="editor" rows="35" cols="65"></textarea>
+              </div>
+          </div>
+          <div id="right-side">
+              <div style="display: flex; flex-direction: column; gap: 1em; margin-left: 1em;">
+                  <div id="diagram" style="width: 67em;"></div>
+                  <!-- The visibility table is not super interesting usually, so have the diagnostics
+                      above that. -->
+                      <div id="diag-box-container"></div>
+                      <div id="vistab"></div>
+              </div>
+          </div>
+      </div>
+      <div id="cheat-sheet-small" style="margin-top:auto;">
+          <div>
+              <div class="full-statement">
+                  <code class="stmt-short stmt">=</code>
+                  <code class="display_text">Pool Name</code>
+                  <code class="id-label header">@identifier</code>
+                  <code class="type header">~blackbox</code>
+                  <code class="type header">~multiple</code>
+              </div>
+              <div class="short-statements">
+                  <code>== Lane</code>
+              </div>
+          </div>
+
+          <div>
+              <div class="full-statement">
+                  <code class="stmt-short stmt">-</code>
+                  <code class="display_text">Process Step</code>
+                  <code class="id-label header">@identifier</code>
+                  <code class="arrow header">&lt;-label"Edge Text"</code>
+                  <code class="arrow header">-&gt;label"Edge Text"</code>
+                  <code class="type header">~service</code>
+              </div>
+              <div class="short-statements">
+                  <code># (Start) Event</code>
+                  <code>- Activity</code>
+                  <code>. End</code>
+                  <code>! End</code>
+                  <code>.#</code>
+                  <code>M#</code>
+                  <code>T#</code>
+                  <code>C#</code>
+                  <code>&gt;#</code>
+                  <code>S#</code>
+                  <code>E#</code>
+                  <code>^#</code>
+                  <code>&lt;#</code>
+                  <code>X#</code>
+                  <code>##</code>
+                  <code>+#</code>
+
+                  <code>..</code>
+                  <code>M.</code>
+                  <code>S.</code>
+                  <code>E.</code>
+                  <code>^.</code>
+                  <code>&lt;.</code>
+                  <code>X.</code>
+                  <code>#.</code>
+              </div>
+              <div class="short-statements">
+                  <code>~throw</code>
+                  <code>~catch</code>
+                  <code>~send</code>
+                  <code>~receive</code>
+                  <code>~manual</code>
+                  <code>~user</code>
+                  <code>~script</code>
+                  <code>~service</code>
+                  <code>~businessrule</code>
+                  <code>~multiple</code>
+                  <code>~loop</code>
+                  <code>~adhoc</code>
+                  <code>~compensation</code>
+              </div>
+          </div>
+
+          <div>
+              <div class="full-statement">
+                  <code class="stmt-short stmt">X</code>
+                  <code class="display_text">Gateway</code>
+                  <code class="id-label header">@identifier</code>
+                  <span class="alternating">
+                      <span>
+                          <code class="arrow header">&lt;-label1"Edge Text"</code>
+                          <code class="arrow header">&lt;-label2"Edge Text"</code>
+                      </span>
+                      <span>
+                          <code class="arrow header">-&gt;label1"Edge Text"</code>
+                          <code class="arrow header">-&gt;label2"Edge Text"</code>
+                      </span>
+                  </span>
+              </div>
+              <div class="short-statements">
+                  <code>+ Gateway</code>
+                  <code>O Gateway</code>
+                  <code>* Gateway</code>
+                  <code>XG</code>
+                  <code>+G</code>
+                  <code>OG</code>
+                  <code>*G</code>
+              </div>
+          </div>
+
+          <div>
+              <div class="full-statement">
+                  <code class="stmt-short stmt">M!</code>
+                  <code class="arrow header">-&gt;label1"Boundary Event Edge Text"</code>
+              </div>
+              <div class="short-statements">
+                  <code>T!</code>
+                  <code>C!</code>
+                  <code>S!</code>
+                  <code>E!</code>
+                  <code>^!</code>
+                  <code>&lt;!</code>
+                  <code>X!</code>
+                  <code>#!</code>
+                  <code>+!</code>
+                  <code>M+</code>
+                  <code>T+</code>
+                  <code>C+</code>
+                  <code>S+</code>
+                  <code>^+</code>
+                  <code>#+</code>
+                  <code>++</code>
+              </div>
+          </div>
+
+          <div>
+              <div class="full-statement">
+                  <code class="stmt-short stmt">OD</code>
+                  <code class="display_text">Data Object</code>
+                  <code class="id-label header">@identifier</code>
+                  <code class="arrow header">&lt;-node-matcher"Data Flow Text"</code>
+                  <code class="arrow header">-&gt;node-matcher"Data Flow Text"</code>
+              </div>
+              <div class="short-statements">
+                  <code>SD Data Store</code>
+                  <code>&nbsp;&amp; Data Continuation</code>
+                  <code>O&amp; Data Continuation</code>
+                  <code>S&amp; Data Continuation</code>
+              </div>
+          </div>
+
+          <div>
+              <div class="full-statement">
+                  <code class="stmt-short stmt">MF</code>
+                  <code class="display_text">Message Flow Text</code>
+                  <code class="arrow header">&lt;-start-node-matcher</code>
+                  <code class="arrow header">-&gt;end-node-matcher</code>
+              </div>
+          </div>
+      </div>
+  </body>
+  <script type="module" src="./main.js" ></script>
+</html>

@@ -1,0 +1,30 @@
+#editor-container {
+    display: inline-grid;
+    border: thin solid gray;
+}
+
+#editor, #mirror-editor, #diagnostics-pane {
+    grid-area: 1/1;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.5em;
+    inset: 0;
+    border: 0;
+
+    font-family: monospace;
+    font-size: 1.25em;
+    white-space: pre;
+    tab-size: 4;
+
+    overflow: auto;
+}
+
+#mirror-editor {
+    pointer-events: none;
+}
+
+#editor {
+    color: transparent;
+    background: transparent;
+    caret-color: black;
+}
