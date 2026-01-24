@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Gateways :: Docs Site</title>
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../..">Docs Site</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="bpmd" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install.html">Installation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../dsl-overview.html">Text Format (DSL) Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PE-BPMD</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pe-bpmd/introduction.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pe-bpmd/secure-channel.html">Secure Channel</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pe-bpmd/tee.html">TEE</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../pe-bpmd/mpc.html">MPC</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">BPMD - A DSL and Layout Tool for Creating BPMN</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></li>
+    <li><a href="building_block_specifics.html">Gateways</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/armin/dev/armin/bpmn-parser//docs-site/modules/ROOT/pages/layout/building_block_specifics.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Gateways</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Gateway nodes are subject to three constraints to make layouting easier:
+. A gateway is either <em>branching</em> or <em>joining</em>. This means, it must either have (1) exactly one incoming edge and at least one outgoing edge, or (2) exactly one outgoing edge and at least one incoming edge (<code>incoming.len().min(&amp;outgoing.len()) == 1</code> would be a "clever" short formulation for that).
+. A gateway can be connected to at most two nodes which are at the same time forced on the same layer as the gateway node (via <code>Above</code> or <code>SameLayer</code>) (this actually applies to regular nodes as well)
+. A gateway node and a same-layer-connected-node are always connected via a straight vertical edge, i.e. there is no snake edge going back and forth to navigate around in-between nodes. (TODO add a check in the sweep code for this - basically t) (this actually applies to regular nodes as well)</p>
+</div>
+<div class="paragraph">
+<p>How it is determined to what side an edge attaches to a gateway:
+The only incoming or outgoing edge is coming in at the side if the other node is not in the same layer, or otherwise coming from above or below if it is in the same layer. Though maybe there should be more thinking, especially if the only-edge does a lane crossing, in which case it <strong>could also be routed downwards. Not sure.
+if a gateway has an edge incoming *from the right</strong> and an edge outgoing <strong>to the left</strong> then this is basically a flipped gateway.
+a flipped gateway is not supported. BPMN processes are forward looking. (otherwise one would need to</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_any_node"><a class="anchor" href="#_any_node"></a>Any Node</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A node can be connected to at most two nodes which are at the same time forced on the same layer as the node (via <code>Above</code> or <code>SameLayer</code>) (this does not apply to message flows, only to sequence flows and data associations)</p>
+</li>
+<li>
+<p>A node and a same-layer-connected-node are always connected via a straight vertical edge, i.e. there is no snake edge going back and forth to navigate around in-between nodes. This is why only two such connected nodes within the same layer can exist (we have a one dimensional layer).</p>
+</li>
+<li>
+<p>There can only be one vertical edge crossing a lane within the same layer. Other such vertical edges are pushed into other layers.
+If a vertical edge crossing a lane goes <em>over other</em> lanes, then no nodes are allowed to be put into that layer within those lanes.</p>
+</li>
+<li>
+<p>A node with a vertical edge crossing a lane is always forced closest to the edge of the lane.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_element"><a class="anchor" href="#_data_element"></a>Data Element</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A data element never enters a gateway node in 0°, 90°, 180° or 270°, it must also come in diagonally. This is to  ensure the arrow is more distinctly set apart from regular sequence flows (TODO does this look good? Maybe should also be done for non-gateway nodes)</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

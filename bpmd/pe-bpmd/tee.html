@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Trusted Execution Environments :: Docs Site</title>
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../..">Docs Site</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="bpmd" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install.html">Installation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../dsl-overview.html">Text Format (DSL) Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PE-BPMD</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="introduction.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="secure-channel.html">Secure Channel</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="tee.html">TEE</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mpc.html">MPC</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">BPMD - A DSL and Layout Tool for Creating BPMN</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></li>
+    <li>Extensions</li>
+    <li>PE-BPMD</li>
+    <li><a href="tee.html">TEE</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/armin/dev/armin/bpmn-parser//docs-site/modules/ROOT/pages/pe-bpmd/tee.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Trusted Execution Environments</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>I welcome you on this page about modeling TEEs within PE-BPMD! At this location it would be logical to write a lengthy explanation about what TEEs are. A short description is already in the PE-BPMD <a href="introduction.html#tee" class="xref page">introductory page</a>. But a lengthy overview, which doesn&#8217;t go too much into implementation details, exists already, and I am sure that I cannot create a better version here. I was the main author of Chapter 3 of <em>D2.1 - Technology Survey and Analysis</em> for the <a href="https://cros.ec.europa.eu/joconde">JOCONDE project</a>. My goal with that text was exactly to not go too much into technical details, but still cover many topics. There is also a lecture where I talked about TEEs: <a href="https://courses.cs.ut.ee/2025/secprog/spring/Main/Lectures" class="bare">https://courses.cs.ut.ee/2025/secprog/spring/Main/Lectures</a> 9. Sandboxing. In the following text I assume that you read the referenced texts.</p>
+</div>
+<div class="paragraph">
+<p>The following sections explain the various attributes and pitfalls through examples.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_an_example"><a class="anchor" href="#_an_example"></a>An Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is a typical use case of confidential computing. You want to process sensitive data in the cloud.
+Hence you rent a confidential VM (e.g. using Intel TDX or AMD SEV-SNP), and then use that to process you business secrets.
+You send the business secrets directly to the VM and receive the processing results directly from the VM, and the cloud service provider should not see the data.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-tee-outsourcing-computation.svg" alt="pebpmd tee outsourcing computation">
+</div>
+</div>
+<div class="paragraph">
+<p>The coloring of the lane and the edges can be configured.
+Since the primary purpose of PE-BPMD is to communicate the impact of planned technologies to readers of the diagram, these changes should stand out visually, like with a git diff.
+But this is just my take, and you are free to omit the coloring attributes to have no coloring applied.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Request</th>
+<th class="tableblock halign-left valign-top">Local State</th>
+<th class="tableblock halign-left valign-top">Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">End User (You)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>This visibility table is the other output of the PE-BPMD analysis, meant to succinctly summarize to what level a given piece of data is protected.
+This visibility table has <a href="introduction.html#vt" class="xref page">all categories</a> present.
+The later sections explain why the <code>A</code> and <code>P</code> entries are created (the <code>V</code>, <code>H</code> and <code>&#160;</code> entries are not TEE specific).</p>
+</div>
+<div class="paragraph">
+<p>But as you can see, the request and response data is only directly visible to the end user (and the TEE which itself is not listed in the visibility table). Other pools either need to do extra work to access the data (<code>P</code>) or realistically don&#8217;t have access to the plaintext (<code>H</code> and <code>&#160;</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= End User (You)
+
+# Start
+# Send Request
+# Receive Response
+. Finished
+
+= Cloud Service Provider
+
+== Rented Confidential VM
+
+# Receive Request
+- Update Local State
+- Create Response
+. Send
+
+
+OD Request -&gt;user-send
+ &amp; Request &lt;-cvm-receive -&gt;cvm-update
+OD Local State &lt;-cvm-update -&gt;cvm-create-reponse
+OD Response &lt;-cvm-create-response -&gt;cvm-send
+ &amp; Response &lt;-user-receive
+
+MF &lt;-user-send -&gt;cvm-receive
+MF &lt;-cvm-send -&gt;user-receive
+
+[pe-bpmd
+  // TEE type (lane, pool or tasks)
+  (tee-lane @cvm)
+
+  // Protection channel starts and ends
+  (tee-in-protect @user-send @user)
+  (tee-in-unprotect @cvm-receive)
+  (tee-out-protect @cvm-send)
+  (tee-out-unprotect @user-receive @user)
+
+  // Additional access characteristics.
+  (tee-external-root-access @user)
+  (tee-hardware-operators on-premises)
+  (tee-software-operators @csp)
+
+  // Generic attributes
+  (stroke-color #a9d31e)
+  (fill-color #eef7d0)
+]</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>(tee-lane @lane-id)</code></dt>
+<dd>
+<p>This example uses the <em>lane</em> variant of the TEE extension.
+This means that all of the tasks within this lane are part of the TEE and thus protected.
+The physical operator of the TEE instance is clearly designated by the enclosing pool.</p>
+<div class="paragraph">
+<p>You can also use the <em>pool</em> (<code>(tee-pool @pool-id)</code>) or <em>tasks</em> (<code>(tee-tasks @task-1 @task-2 &#8230;&#8203;)</code>) variant, as shown in later examples. In the example at hand, modeling the TEE as a lane makes the most sense, since we want to explicitly see what is happening inside of the TEE. What is happening inside of the TEE is in a way the "meat" of the process.
+If the internal workings of the TEE are less relevant in the larger business process, the <em>tasks</em> variant makes more sense.<br>
+Note: Within the visibility table only names of pools are listed. A <code>tee-pool</code> will also be part of the visibility table, whereas the <code>tee-lane</code> and <code>tee-tasks</code> variants will not.</p>
+</div>
+</dd>
+<dt class="hdlist1"><code>(tee-in-protect @node-id @pool-id|no-rv)</code> and <code>(tee-in-unprotect @node-id)</code></dt>
+<dd>
+<p>Both can appear multiple times.
+These are the starts and ends of the incoming protection channels.
+<code>tee-in-protect @node-id @rv-creator</code> designates that data is protected at <code>@node-id</code>, where <code>@node-id</code> shall not point to a node within the TEE.
+<code>@rv-creator</code> (or alternatively the fixed string <code>no-rv</code>) references the pool which created the reference value.
+This is explained in more detail in <a href="#rv">a separate section</a>.
+The data to protect is detected automatically by analysing which semantic data element visually enters and leaves the given node, or visually moves across a message flow.
+For all the data that is protected via <code>tee-in-protect</code> nodes, their protection is removed when graph traversal reaches a <code>tee-in-unprotect</code> node.
+In the given example, <code>Request</code> is protected and then unprotected by the send and receive events, and it is visually explicitly modeled that it enters the send event and leaves the receive event.
+One can follow the flow of data with a finger across message flows and data associations.</p>
+</dd>
+<dt class="hdlist1"><code>(tee-out-protect @node-id)</code> and <code>(tee-out-unprotect @node-id @pool-id|no-rv)</code></dt>
+<dd>
+<p>Similar to the <code>in</code> variants, but this is the out direction. Hence for <code>tee-out-protect</code>, the <code>@node-id</code> must reference a node within the TEE, and <code>for `tee-out-unprotect @node-id</code> the <code>@nodeid</code> must reference a node outside of the TEE.</p>
+</dd>
+<dt class="hdlist1"><code>(tee-external-root-access @pool-id)</code></dt>
+<dd>
+<p>This attribute must always be present and either takes a <code>@pool-id</code> or the fixed string <code>blocked</code> when there is no root user.
+It says whether someone can use <code>ssh</code> to become a root user on the target machine (or something conceptually similar).
+That user then has access to all files which the TEE sees.
+More in <a href="#root">this section</a>.</p>
+</dd>
+<dt class="hdlist1"><code>(tee-hardware-operators on-premises|@pool-id-1 @pool-id-2 &#8230;&#8203;)</code></dt>
+<dd>
+<p>The TEE is running on some physical server (at least this is what I last learned about TEE technology). And this physical server is operated by someone, some pool. This could in principle also be some joint operation (or at least access), if you rent a physical rack space in a data center and visit it yourself physically from time to time. For <code>tee-tasks</code> and <code>tee-lane</code> you can use the <code>on-premises</code> keyword to use the containing pool as the hardware operator. For <code>tee-pool</code> you must specify at least one ID.</p>
+</dd>
+<dt class="hdlist1"><code>(tee-software-operators @pool-id-1 @pool-id-2)</code></dt>
+<dd>
+<p>Those are usually system administrators: Those who have virtual access to the hosting environment of the TEE. Could be the administrator who accesses the remote VM via <code>ssh</code> to start, restart, stop, etc., the VM, or the one who runs the Kubernetes commands to do the same.<br>
+Someone who acts as a system administrator <em>within</em> the TEE should be listed within the <code>tee-external-root-access</code> property.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rv"><a class="anchor" href="#rv"></a>Importance of the Reference Value</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A user which <em>sends data to a service within a TEE by performing remote attestation, deriving a session key during that process, and encrypting the data with the session key or a further data encryption key that is in one way or another securely connected with aforementioned session key</em> (further this is abbreviated as just <em>sending data to the TEE</em> as the full sentence is quite a mouthful) can use the mechanisms of remote attestation to verify that the service within the TEE is trustworthy.
+TEEs provide some means of hashing the software which they run (the specifics are different for every TEE technology, but the purpose is the same).
+A user could calculate the hash of and audit the software which they expect to run in the TEE (this is further referred to as <em>deriving the reference values</em>), and then compare their version of the hash against what they are presented with during remote attestation.
+In practice, this task of deriving the reference values is very involved and requires profound competences in the fields of cybersecurity and related fields.
+However, most users usually have competences in other areas (how about you, or your neighbour, or your doctor?) and hence cannot perform this task.
+So auditing the software and calculating the hash is in the best case outsourced to some trusted third party, or just omitted in the worst case.
+All of these variants can be modelled with the PE-BPMD extension.</p>
+</div>
+<div class="sect2">
+<h3 id="_user_generated_reference_values"><a class="anchor" href="#_user_generated_reference_values"></a>User-Generated Reference Values</h3>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-tee-rv-client.svg" alt="pebpmd tee rv client">
+</div>
+<div class="title">Figure 1. This image is the same for all subsequent reference value examples, hence it is not repeated.</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remote User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Third Party Auditor</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some Other Software Operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Remote User
+
+# Start
+. Send Request
+
+= Cloud Service Provider
+
+# Receive Request
+- Process
+. Done
+
+OD Request -&gt;user-send
+ &amp; Protected Request &lt;-csp-receive -&gt;csp-process
+
+MF &lt;-user-send -&gt;csp-receive
+
+= Third Party Auditor // Relevant in subsequent examples.
+
+= Some Other Software Operator // Primarily for showing what changes in the visibility table
+
+[pe-bpmd
+  // For conciseness, the TEE is represented by just that one activity.
+  (tee-tasks @process)
+
+  // In this simple example, data only flows into the TEE.
+  // Note that there is no tee-in-unprotect, as tee-tasks are implicitly unprotection nodes.
+  (tee-in-protect @user-send @user) <i class="conum" data-value="1"></i><b>(1)</b>
+
+  // Additional access characteristics.
+  (tee-external-root-access blocked)
+  (tee-hardware-operators on-premises)
+  (tee-software-operators @user @csp @some-other-so)
+
+  // Generic attributes
+  (stroke-color #a9d31e)
+  (fill-color #eef7d0)
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>@user</code> says that the user themselves calculated the reference values. This is the only value that is changed in the subsequent examples.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If the client has the required competence to undertake this process, then this is <em>in general</em> the most secure way to go. This does not exclude that the user could upload their calculated reference value to a public data store, where other users can crosscheck it, which could further improve the security, depending on the context.</p>
+</div>
+<div class="paragraph">
+<p>However, users usually have competences in areas other than cybersecurity and white hacking, hence this is likely not what you will use in your modeling.</p>
+</div>
+<div class="paragraph">
+<p>Sidenote: This example uses the <code>tee-tasks</code> statement. For this, there do not exist <code>tee-in-unprotect</code> nor <code>tee-out-protect</code> statements, as this is all hidden within the TEE tasks.
+These TEE tasks form black boxes and we just assume that data with TEE protection is unprotected in there (and vice versa for the output).
+This also means that only in this case it is not necessary to visually model the unprotected data within the TEE.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_trusted_third_party"><a class="anchor" href="#_trusted_third_party"></a>Trusted Third Party</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remote User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Third Party Auditor</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some Other Software Operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">  (tee-in-protect @user-send @tpa) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>@tpa</code> refers to an organization which is neither a software operator nor a hardware operator of the TEE.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The visibility table is the same as for the <em>User-Generated Reference Value</em> case.
+This is in a way misleading, as this leaves out the threat that e.g. an attacker could bribe the trusted third party to report a wrong reference value to the end user that performs remote attestation.
+Obviously this would make the trusted third party an <em>untrusted</em> third party if the bribe would be uncovered, and thus might be considered unplausible, but having the potential threat visible in a table would at least present the possibility to explicitly discuss and exclude this threat (afterall, this is meant as a communication tool).</p>
+</div>
+<div class="paragraph">
+<p>This could be solved by a hypothetical <em>collusion table</em> which would say, for each piece of data, whether something could be accessed if two or more pools would work together.
+This is not present and not currently in the pipeline, but I might come around some day implementing it if people like the PE-BPMD stuff.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_software_operator"><a class="anchor" href="#_software_operator"></a>Software Operator</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remote User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Third Party Auditor</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some Other Software Operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">  (tee-in-protect @user-send @other-software-operator) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>@other-software-operator</code> refers to a pool which is a software operator for the given TEE.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The visibility table now displays an <code>A</code> for the other software operator.
+This is the case because they could in principle put malicious software into the TEE and use <em>that</em> as the basis for the reverence value calculation. I.e. they would tell the end user to trust the malicious software. Since they are the software operator for the TEE, they can just forward network requests of the remote user under attack to the malicious TEE software, which the user will then happily communicate with (afterall, they use the reference value of that malicious software within the TEE).</p>
+</div>
+<div class="paragraph">
+<p>You might have an urge to comment that this can easily be detected by having audit logs for all kinds of actions, and other great protections.
+If you implement those protections to prevent, or at least uncover, this attack (especially thanks to the table reminding you that there is a problem), then that is good!
+You can communicate this with the table: "We see an <code>A</code> here, and to protect against this, we do this and that, which is, for the protection level we target, a sufficient countermeasure."</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hardware_operator"><a class="anchor" href="#_hardware_operator"></a>Hardware Operator</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remote User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Third Party Auditor</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some Other Software Operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">  (tee-in-protect @user-send @csp) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>@csp</code> refers to a pool which is a hardware operator for the given TEE.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This elevates the former <code>P</code> to an <code>A</code>, with the same resoning as for the previous software operator example.
+The hardware operator likely controls the network traffic and could just route the user traffic to another machine with the malicious software in a TEE, or likely do many other clever things.
+And again, for the context you operate in, you can then communicate your planned countermeasures.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_reference_value"><a class="anchor" href="#_no_reference_value"></a>No Reference Value</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remote User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Third Party Auditor</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Some Other Software Operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">  (tee-in-protect @user-send no-rv) <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>no-rv</code> says that the user ignores the hashes received from the TEE. It blindly trusts that it talks to the correct software.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This gives all of the hardware operators and software operators the chance to mount an attack.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_wrong_analysis_table_with_unrealistic_protection"><a class="anchor" href="#_wrong_analysis_table_with_unrealistic_protection"></a>Wrong Analysis Table With Unrealistic Protection</h3>
+<div class="paragraph">
+<p>The reference value analysis is performed directly on the node where the protection is applied.
+Let&#8217;s look at a slight modification of the previous examples which results in a wrong visibility table to understand what that means:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-tee-rv-wrong.svg" alt="pebpmd tee rv wrong">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Remote User
+
+# Start
+- Encrypt for TEE
+- Add additional encryption layer
+. Send Request
+
+= Cloud Service Provider
+
+# Receive Request
+- Process
+. Done
+
+OD Request -&gt;encrypt-for-tee
+ &amp; Request [Prot: TEE] &lt;-encrypt-for-tee -&gt;add-additional
+ &amp; Request [Prot: TEE &amp; SC] &lt;-add-additional -&gt;user-send
+ &amp; Request [Prot: TEE &amp; SC] &lt;-csp-receive -&gt;csp-process
+
+MF &lt;-user-send -&gt;csp-receive
+
+[pe-bpmd
+  // For conciseness, the TEE is represented by just that one activity.
+  (tee-tasks @process)
+
+  (tee-in-protect @user-encrypt-for-tee no-rv)
+
+  // Additional access characteristics.
+  (tee-external-root-access blocked)
+  (tee-hardware-operators on-premises)
+  (tee-software-operators @user @csp)
+
+  // Generic attributes
+  (stroke-color #a9d31e)
+  (fill-color #eef7d0)
+]
+
+[pe-bpmd
+  (secure-channel @add-additional post-received) <i class="conum" data-value="1"></i><b>(1)</b>
+  (stroke-color #1d3cd4)
+  (fill-color #a2b0f2)
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>post-received</code> means that the end of the secure channel is not present within this diagram, i.e. the TEE only sees the ciphertext.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We see that after encrypting the request for the TEE, we encrypt the encrypted request again via a secure channel.
+However, the secure channel is modelled in a way that it does not end in the TEE, i.e. the TEE cannot decrypt the <em>inner</em> request (due to the <em>outer</em> additional protection layer).
+Based only on this model we must assume that the Cloud Service Provider will also be presented with this additional protection layer and should have <code>AH</code> (or <code>HA</code>, order doesn&#8217;t matter).
+However, in the following table we see that it just says <code>A</code>:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remote User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HH</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The reason is that the analysis around the reference value <em>only</em> looks at the current protections at the node where data was protected for the TEE.
+The reason is that the ultimate goal is that PE-BPMD supports a modelling approach where the whole business process is modelled in smaller sub diagrams.
+This could then result in the situation that the encryption happens in one diagram, and the decryption within the TEE in another diagram.
+That second diagram however would not have the <code>(tee-in-protect @node @crucial-piece-of-info)</code> statement present, since this is not part of this diagram.
+Hence in a split-diagram situation, an analysis that would look at the full way from <code>tee-in-protect</code> to <code>tee-in-unprotect</code> would not work at all.
+Therefor, we just look at the <code>tee-in-protect</code> side.
+The assumption is, that a practical process <em>will not add further protection</em> in order to prevent the TEE from accessing data that was precisely encrypted for that TEE.
+I can imagine that someone could come up with a use case for that (some private anonymised IDs maybe, if deterministic encryption is used), but this seems like a situation where PE-BPMD is too high-level anyway.
+Anyway, in other words, the assumption is that if something is encrypted for a TEE, then it will reach the TEE through the controlled perimeter of the hardware and software operator in the given form as it was present when TEE encryption was applied.
+If you have a situation where you think this wrong result is inappropriate and should be fixed, then let me know.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="root"><a class="anchor" href="#root"></a>External Root Access</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The external root access is primarily meant to cover e.g. an administrator which manages the confidential VM in a Kubernetes cluster.
+Such an administrator (very likely) has root access to that machine and in principle can access all the data.
+<br>
+That said, this doesn&#8217;t cover the situation where someone can <code>ssh</code> into the machine with a less privileged user and access only a subset of data.
+In that case this data is usually actually meant to be accessed by that user, so the data transport should be modelled explicitly within the diagram.</p>
+</div>
+<div class="paragraph">
+<p>This access is marked with an <code>A</code> and not with a <code>V</code>.
+Actually accessing the data from within the TEE might be an additional step.
+In the Kubernetes example, you would have your deployment rules to control the software inside and outside of the TEE, but you would probably need to do some extra work to actually access the data.
+This <em>could</em> be trivial, but it could also trigger some additional monitoring systems and so might not go unnoticed.
+The plaintext does not simply move to the user as a logical result of following the process.
+Hence an <code>A</code> instead of a <code>V</code>, even if the effort to access the plaintext data might be miniscule.</p>
+</div>
+<div class="sect2">
+<h3 id="_basic_example"><a class="anchor" href="#_basic_example"></a>Basic Example</h3>
+<div class="paragraph">
+<p>In this example there is a pool <em>Someone With Root Access</em> which does not visually interact with the TEE tasks, but it is marked as having root access within the PE-BPMD annotation and thus has access to the request.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-tee-root-access.svg" alt="pebpmd tee root access">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Request</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Remote User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Someone With Root Access</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Remote User
+
+# Start
+. Send Request
+
+= Cloud Service Provider
+
+# Receive Request
+- Process
+. Done
+
+OD Request -&gt;user-send
+ &amp; Protected Request &lt;-csp-receive -&gt;csp-process
+
+MF &lt;-user-send -&gt;csp-receive
+
+= Someone With Root Access
+
+[pe-bpmd
+  (tee-tasks @process)
+
+  (tee-in-protect @user-send @user)
+
+  (tee-external-root-access @someone-with-root-access) <i class="conum" data-value="1"></i><b>(1)</b>
+  (tee-hardware-operators on-premises)
+  (tee-software-operators @user @csp)
+
+  // Generic attributes
+  (stroke-color #a9d31e)
+  (fill-color #eef7d0)
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Here we declare the root access.</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_recursive_example"><a class="anchor" href="#_recursive_example"></a>Recursive Example</h3>
+<div class="paragraph">
+<p>Root access works recursively. In the following example we see two examples of this:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pool <em>Someone With Root Access</em> has access to TEE 1. TEE 1 itself has root access to TEE 2. As a result, the pool <em>Someone With Root Access</em> has recursively also access to the data within TEE 2.</p>
+</li>
+<li>
+<p>Pool <em>Cloud Service Provider 1</em> can physically compromise the secrets within TEE 1. This means for example, that it can extract the communication channel secrets from TEE 1 after TEE 1 legitimately created the communication channel. Then they can access the data within TEE 2.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-tee-root-access-recursive.svg" alt="pebpmd tee root access recursive">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Dummy Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software Operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TEE 1 - Recursive Root Access</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Service Provider 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TEE 2 - Data Processor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Someone With Root Access</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Software Operator
+
+= Cloud Service Provider 1
+
+= TEE 1 - Recursive Root Access
+
+= Cloud Service Provider 2
+
+= TEE 2 - Data Processor
+
+# Create Dummy Data
+. Don't do anything
+
+= Someone With Root Access
+
+
+OD Dummy Data &lt;-create-dummy-data
+
+
+[pe-bpmd
+  (tee-pool @tee-recursive-root-access)
+
+  (tee-external-root-access @someone-with-root-access) <i class="conum" data-value="1"></i><b>(1)</b>
+  (tee-hardware-operators @csp1)
+  (tee-software-operators @software-operator)
+
+  // Generic attributes
+  (stroke-color #a9d31e)
+  (fill-color #eef7d0)
+]
+
+[pe-bpmd
+  (tee-pool @tee-data-processor)
+
+  (tee-external-root-access @tee-recursive-root-access) <i class="conum" data-value="2"></i><b>(2)</b>
+  (tee-hardware-operators @csp2)
+  (tee-software-operators @software-operator)
+
+  // Generic attributes
+  (stroke-color #1ed3b8)
+  (fill-color #b4f4eb)
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>TEE 1 can be accessed by "Someone with root access".</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>TEE 2 can be accessed by the TEE 1.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

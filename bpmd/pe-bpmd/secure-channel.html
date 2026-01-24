@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Secure Channel :: Docs Site</title>
+    <meta name="generator" content="Antora 3.1.15">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../..">Docs Site</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="bpmd" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install.html">Installation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../dsl-overview.html">Text Format (DSL) Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extensions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PE-BPMD</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="introduction.html">Introduction</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="secure-channel.html">Secure Channel</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="tee.html">TEE</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="mpc.html">MPC</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">BPMD - A DSL and Layout Tool for Creating BPMN</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">BPMD - A DSL and Layout Tool for Creating BPMN</a></li>
+    <li>Extensions</li>
+    <li>PE-BPMD</li>
+    <li><a href="secure-channel.html">Secure Channel</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///home/armin/dev/armin/bpmn-parser//docs-site/modules/ROOT/pages/pe-bpmd/secure-channel.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Secure Channel</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>When Alice sends a message to Bob in plaintext, then every message carrier on the way can read the message.
+With a secure channel, the message will be protected from eavesdropping.
+Depending on the specific kind of secure channel they have even more security features, but for PE-BPMD only the eavesdropping / data leakage part is relevant.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_simple_example"><a class="anchor" href="#_simple_example"></a>Simple Example</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-sc-simple.svg" alt="pebpmd sc simple">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bob</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Alice and Bob can see the data, but the network, i.e. whoever transports the data (be it a series of ISPs, or a pigeon), only sees the ciphertext.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Alice
+
+# Start
+. Send
+
+= Bob
+
+# Receive
+. Done
+
+
+OD Data -&gt;send
+ &amp; Data &lt;-receive
+
+
+MF &lt;-send -&gt;receive
+
+
+[pe-bpmd
+  (secure-channel @send @receive)
+
+  (stroke-color #1ed3b8)
+  (fill-color #b4f4eb)
+]</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>(secure-channel @start @end)</code></dt>
+<dd>
+<p>At the moment, a secure channel can only start at one task, and can only finish at one task.
+Dedicated syntax to specify multiple entry points or ends of a secure channel may be added at a later point.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_only_decryption"><a class="anchor" href="#_only_decryption"></a>Only Decryption</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You might want to model only a subprocess where the encryption is omitted and only the decryption part is present.
+In this case you can specify via the <code>pre-sent</code> key word that sending happened in advance to the start of this process.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-sc-pre-sent.svg" alt="pebpmd sc pre sent">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bob</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Alice
+
+# Start
+. Send
+
+= Bob
+
+# Receive
+. Done
+
+OD Data &lt;-receive
+ &amp; Protected Data -&gt;send
+
+MF &lt;-send -&gt;receive
+
+[pe-bpmd
+  (secure-channel pre-sent @receive) <i class="conum" data-value="1"></i><b>(1)</b>
+
+  (stroke-color #1ed3b8)
+  (fill-color #b4f4eb)
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Here the <code>pre-sent</code> key word replaces the ID of the node which otherwise applies the protection.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_only_encryption"><a class="anchor" href="#_only_encryption"></a>Only Encryption</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As in the previous example, you can model only the encryption part and omit the decryption part.
+The respective key word is <code>post-received</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-sc-post-received.svg" alt="pebpmd sc post received">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bob</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Alice
+
+# Start
+. Send
+
+= Bob
+
+# Receive
+. Done
+
+OD Data &lt;-receive
+ &amp; Protected Data -&gt;send
+
+MF &lt;-send -&gt;receive
+
+[pe-bpmd
+  (secure-channel @send post-received) <i class="conum" data-value="1"></i><b>(1)</b>
+
+  (stroke-color #1ed3b8)
+  (fill-color #b4f4eb)
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Here the <code>post-received</code> key word replaces the ID of the node which otherwise undoes the protection.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_just_ciphertext"><a class="anchor" href="#_just_ciphertext"></a>Just Ciphertext</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use <code>pre-sent</code> and <code>post-received</code> at the same time for cases where you show how the protected data travels.
+Now, in that case the algorithm has no task to look for which data to protect.
+Hence, you must manually specify the list of data objects that shall be protected via this secure channel.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-sc-both.svg" alt="pebpmd sc both">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Protected Data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bob</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Alice
+
+# Start
+. Send
+
+= Bob
+
+# Receive
+. Done
+
+OD Protected Data &lt;-receive
+ &amp; Protected Data -&gt;send
+
+MF &lt;-send -&gt;receive
+
+[pe-bpmd
+  (secure-channel pre-sent post-received @protected-data) <i class="conum" data-value="1"></i><b>(1)</b>
+
+  (stroke-color #1ed3b8)
+  (fill-color #b4f4eb)
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Both <code>pre-sent</code> and <code>post-received</code> key words are used.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_protected_and_unprotected_data"><a class="anchor" href="#_protected_and_unprotected_data"></a>Protected and Unprotected Data</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The additional list of optional data IDs, as seen in the previous section, can usually be used to apply protection only to a subset of data which moved over the same message flow.
+(Whether it is good style to transport multiple data objects at the same time is a question of style, probably?)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/generated/pebpmd-sc-prot-and-unprot.svg" alt="pebpmd sc prot and unprot">
+</div>
+<div class="title">Figure 1. The data associations (dotted edges) here look quite funky. This is on the TODO list.</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pool</th>
+<th class="tableblock halign-left valign-top">Data</th>
+<th class="tableblock halign-left valign-top">Cat Image</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alice</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bob</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">H</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bpmd hljs" data-lang="bpmd">= Alice
+
+# Start
+. Send
+
+= Bob
+
+# Receive
+. Done
+
+
+OD Data -&gt;send
+ &amp; Data &lt;-receive
+
+OD Cat Image -&gt;send
+ &amp; Cat Image &lt;-receive
+
+MF &lt;-send -&gt;receive
+
+
+[pe-bpmd
+  (secure-channel @send @receive @data) <i class="conum" data-value="1"></i><b>(1)</b>
+
+  (stroke-color #1ed3b8)
+  (fill-color #b4f4eb)
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Only <em>Data</em> is protected. The <em>Cat Image</em> moves across the same <code>@send</code> and <code>@receive</code> nodes, but it is explicitly omitted from the protection.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
