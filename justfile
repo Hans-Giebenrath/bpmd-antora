@@ -1,6 +1,7 @@
 build:
     cd ../bpmn-parser && just prepare-doc-site
     npx antora antora-playbook.yml
+    cd ../bpmn-parser && mkdir -p ../bpmd-antora/build/site/playground && just build-playground ../bpmd-antora/build/site/playground
 
 publish:
     ls ../gh-pages || git worktree add ../gh-pages gh-pages
